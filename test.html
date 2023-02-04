@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>provide + inject</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+</body>
+</html>
+
+<script>
+    Vue.component('A', {
+        template: `
+      <div>
+        <B></B>
+      </div>
+    `,
+        provide: {
+            msg: '1234124'
+        }
+    })
+    Vue.component('B', {
+        template: `
+      <div>
+        <label>B:</label>
+        <span>{{ this.msg }}</span>
+        <C></C>
+      </div>
+    `,
+        provide: {
+            msg: '42341234',
+            name: 'asdasda'
+        },
+        inject: ['msg'],
+    })
+
+    Vue.component('C', {
+        template: `
+      <div>
+        <label>C:</label>
+        <span>{{ this.xingming }}</span>
+        <span>{{ this.msg }}</span>
+      </div>
+    `,
+        inject: {
+            xingming: {
+                from: 'name',
+                default: ''
+            },
+            msg: {
+                from: 'msg',
+                default: ''
+            }
+        },
+        data() {
+            return {
+            }
+        },
+    })
+    var app=new Vue({
+        el: '#app',
+        template: `
+      <div>
+        <A />
+      </div>
+    `
+    });
+</script>
